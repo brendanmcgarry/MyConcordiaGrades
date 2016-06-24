@@ -7,7 +7,7 @@ echo. 2>hold.txt
 echo. 2>newcheckedgrades.txt
 
 REM for each grade in table on MyConcordia, delimt'd so %%a is course code, %%b is grade
-for /f "tokens=1,2 delims=:" %%a in ('phantomjs MyConcordiaGrades.js') do (
+for /f "tokens=1,2 delims=:" %%a in ('phantomjs MyConcordiaGrades.js username pass') do (
 	REM for each grade from most recent grades check
 	for /f "tokens=1,2 delims=:" %%i in ('type checkedgrades.txt') do (
 		REM each grade with changes to it is appended to hold.txt
