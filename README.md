@@ -1,7 +1,7 @@
 MyConcordiaGrades
 =================
 
-This guide assumes the use of Python 2.7, it has not been tested with other versions yet.
+This guide assumes the use of Python 2.7, it has not been tested with other versions yet. We also assume you are using gmail, we do not support other email providers yet, this will change in future updates.
 
 Right now MyConcordiaGrades is a simple selenium based web crawler that checks for new grades in the summer 2016 semester.
 In the future it will be updated to handle every semester and will be automated, but for now it will mostly be targetting 
