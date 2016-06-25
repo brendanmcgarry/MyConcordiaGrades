@@ -114,7 +114,7 @@ if len(newGrades) > 0:
 	for grade in newGrades:
 		message += grade + ": " + newGrades[grade] + "\n"
 
-	to = yourNumber"@"+yourProvider 	# input phone num in place of "num";
+	to = yourNumber+"@"+yourProvider 	# input phone num in place of "num";
 										# replace "sms.rogers.com" with your carrier's email-to-sms service
 	smtpserver = smtplib.SMTP("smtp.gmail.com", 587)
 	smtpserver.ehlo()
