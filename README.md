@@ -1,10 +1,11 @@
 MyConcordiaGrades
 =================
 
+This guide assumes the use of Python 2.7, it has not been tested with other versions yet.
+
 Right now MyConcordiaGrades is a simple selenium based web crawler that checks for new grades in the summer 2016 semester.
 In the future it will be updated to handle every semester and will be automated, but for now it will mostly be targetting 
-tech savvy individuals. This small guide assumes you are able to use the pip command in your terminal, if not then go to this 
-link: [Installing Pip](https://pip.pypa.io/en/stable/installing/)
+tech savvy individuals. This small guide assumes you have python installed and you are able to use the pip command in your terminal, if not then go to this link: [Installing Pip](https://pip.pypa.io/en/stable/installing/)
 
 #### IMPORTANT NOTE: 
 
@@ -74,3 +75,4 @@ After saving the file run this in your terminal:
 
 and it should list "*/10 * * * * cd /Path/To/Directory/With/Script && python2.7 pushNewGrades.py", if not then you 
 did something incorrectly.
+
