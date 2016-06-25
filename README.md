@@ -49,6 +49,8 @@ To install selenium simply run the following command in the terminal:
 Setting up a cron job on a Mac
 ==============================
 
+__*Step 1*__
+
 This step is pretty straight forward. Run the following command in your terminal:
 
 ```
@@ -56,6 +58,13 @@ This step is pretty straight forward. Run the following command in your terminal
 ```
 
 You have the choice of replacing "vi" with your preferred editor.
+
+__*Step 1.5*__
+
+You may have to run, "sudo env EDITOR=vi crontab -e" instead depending on your permissions. I personally ran into an error 
+where it couldn't detect phantomJS in the PATH even though it was clearly there. You can use the method below to figure out if you are receiving this error.
+
+__*Step 2*__
 
 Finally add the following line inside the editor:
 
@@ -67,12 +76,21 @@ This cronjob is tasked to run every 10 minutes. Make sure to change the director
 directory  that is currently holding the pushNewGrades.py script. On my mac I have it in "/Users/name/CronTasks". For 
 more information on cron jobs go here: [Cron Jobs](http://www.adminschoice.com/crontab-quick-reference)
 
+__*Step 2.5*__
+
+If you want to redirect potential errors from the pushNewGrades.py scripts then add the following to your crontab instead:
+
+```
+  */10 * * * * cd /Path/To/Directory/With/Script && python2.7 pushNewGrades.py >> /Path/To/Directory/With/Log.log &2>1
+```
+
+__*Step 3*__
+
 After saving the file run this in your terminal:
 
 ```
   crontab -l
 ```
 
-and it should list "*/10 * * * * cd /Path/To/Directory/With/Script && python2.7 pushNewGrades.py", if not then you 
-did something incorrectly.
+and it should display the cron job that you added previously (NOTE: If you ran crontab with sudo previously you must also run this command with sudo).
 
