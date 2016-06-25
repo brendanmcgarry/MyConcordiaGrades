@@ -1,4 +1,5 @@
 tests/
 checkedgrades.txt
 hold.txt
+ghostdriver.log
 ConcordiaGrades.db
