@@ -127,7 +127,7 @@ if len(newGrades) > 0:
 	for grade in newGrades:
 		message += grade + ": " + newGrades[grade] + "\n"
 
-	to = yourNumber+"@"+smsGateway
+	to = yourNumber+smsGateway
 	smtpserver = smtplib.SMTP("smtp.gmail.com", 587)
 	smtpserver.ehlo()
 	smtpserver.starttls()
