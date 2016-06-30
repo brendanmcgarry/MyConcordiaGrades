@@ -1,0 +1,14 @@
+Bell,@txt.bell.ca
+Solo,@txt.bell.ca
+Rogers,@sms.rogers.com
+Videotron,@pcs.rogers.com
+Fido,@sms.fido.ca
+Telus,@msg.telus.com
+Virgin Mobile,@vmobile.ca
+PC Mobile,@mobiletxt.ca
+Koodo Mobile,@msg.koodomobile.com
+Saskatel,@sms.saskatel.com
+Saskatel Mobility,@pcs.saskatelmobility.com
+MTS Allstream Inc.,@text.mts.net
+Manitoba Telecom Services Inc.,@text.mts.net
+Windows Mobile,@txt.windows.mobile.ca

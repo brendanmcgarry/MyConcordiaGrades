@@ -7,7 +7,8 @@ yourPassword  = "pass"
 yourEmail     = "email"
 yourEmailPass = "emailPass"
 yourNumber    = "num"
-yourProvider  = "provider" # Sms email suffix of your provider
+yourProvider  = "provider"	# Select your provider from smsGateways.txt
+							# If your carrier is not there, please add them and their gateway to smsGateways.txt in the proper format
 
 import sys
 from selenium import webdriver
@@ -106,6 +107,18 @@ for row in cursor:
 	if row[0] in newGrades:
 		del newGrades[row[0]]
 
+# Get carrier sms gateway
+smsGateway = ""
+fp = open("smsGateways.txt")	# file with carriers and sms gateways, comma separated
+lines = fp.read().split("\n")
+fp.close()
+
+for line in lines:
+	aCarrier = line.split(",")[0]
+	aGateway = line.split(",")[1]
+	if yourProvider in aCarrier:
+		smsGateway = aGateway
+
 if len(newGrades) > 0:
 	# Send the new grades to the valid SMS email
 	import smtplib
@@ -114,7 +127,7 @@ if len(newGrades) > 0:
 	for grade in newGrades:
 		message += grade + ": " + newGrades[grade] + "\n"
 
-	to = yourNumber+"@"+yourProvider
+	to = yourNumber+"@"+smsGateway
 	smtpserver = smtplib.SMTP("smtp.gmail.com", 587)
 	smtpserver.ehlo()
 	smtpserver.starttls()
