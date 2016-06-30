@@ -102,20 +102,28 @@ and it should display the cron job that you added previously (NOTE: If you ran c
 Setting up a Windows Task Scheduler on a PC
 ===========================================
 Open the Windows Task Scheduler
+
 Click "Create Task" in the right sidebar
+
 In the General tab:
-	Give the task a descriptive/unique name in "Name:"
-	Check "Run with highest privileges" and "Run whether user is logged on or not"
-	Under "Configure for", select your OS (or the closest option)
+
+* Give the task a descriptive/unique name in "Name:"
+* Check "Run with highest privileges" and "Run whether user is logged on or not"
+* Under "Configure for", select your OS (or the closest option)
+
 In the Triggers tab:
-	Click "New..."
-	Check "Daily"
-	Start: Current date at "12:00:00 AM"
-	"Recur every": 1 days
-	Check "Repeat task every:" and input "5 minutes" (or however often you want it to run)
+
+* Click "New..."
+* Check "Daily"
+* Start: Current date at "12:00:00 AM"
+* "Recur every": 1 days
+* Check "Repeat task every:" and input "5 minutes" (or however often you want it to run)
+
 In the Actions tab:
-	Click "New..."
-	"Start in (optional):" the folder location where pushNewGrades.py is
-	"Program/script:" pushNewGrades.py
+
+* Click "New..."
+* "Start in (optional):" the folder location where pushNewGrades.py is
+* "Program/script:" pushNewGrades.py
+
 Regardless of the time of day, the task should begin to run at every time increment after 12:00:00 AM.
 For example, if the task is configured to run every 5 minutes and you create this task at 3:41 PM, its Next Run Time should immediately be 3:45 PM.
