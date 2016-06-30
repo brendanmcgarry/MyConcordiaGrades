@@ -34,6 +34,7 @@ You can do so here: [link](https://www.google.com/settings/security/lesssecureap
 Dependencies
 ============
 Python 2.7
+
 PhantomJS (tested with v. 1.9.8 & v. 2.1.1)
 
 MyConcordiaGrades needs the following modules for Python:
