@@ -94,7 +94,7 @@ if len(cursor.fetchall()) == 0:
 	conn.execute('''CREATE TABLE Grades(
 						ID INTEGER PRIMARY KEY,
 						Class VARCHAR(30) NOT NULL,
-						Grade VARECHAR(4) NOT NULL
+						Grade VARECHAR(7) NOT NULL
 					);''')
 
 cursor = conn.execute('''SELECT `Class`, `Grade`
@@ -104,8 +104,9 @@ newGrades = grades
 
 # Make sure we haven't already sent the grades already
 for row in cursor:
-	if row[0] in newGrades:
-		del newGrades[row[0]]
+	for course in newGrades.keys():
+		if row[0] == course and row[1] == newGrades[course]:
+			del newGrades[course]
 
 # Get carrier sms gateway
 smsGateway = ""
@@ -140,6 +141,7 @@ if len(newGrades) > 0:
 
 	# Add the new grades to the DB
 	for grade in newGrades:
+		conn.execute("DELETE FROM `Grades` WHERE `Class` = \'"+grade+"\'")
 		conn.execute("INSERT INTO `Grades` (`Class`, `Grade`) VALUES (\'"+grade+"\', \'"+newGrades[grade]+"\');")
 	conn.commit()
 
