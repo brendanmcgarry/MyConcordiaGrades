@@ -4,7 +4,7 @@ MyConcordiaGrades
 This guide assumes the use of Python 2.7; it has not been tested with other versions yet. We also assume you are using gmail, and we do not support other email providers yet but this might change in future updates.
 
 Right now MyConcordiaGrades is a simple selenium based web crawler that checks for new grades in the summer 2016 semester.
-In the future it will be updated to handle every semester and will be automated, but for now it will mostly be targetting 
+In the future it will be updated to handle every semester and will be automated, but for now it will mostly be targeting 
 tech savvy individuals. This small guide assumes you have python and PhantomJS installed and you are able to use the pip command in your terminal, if not then go to this link: [Installing Pip](https://pip.pypa.io/en/stable/installing/)
 
 #### IMPORTANT NOTE: 
@@ -116,3 +116,5 @@ In the Actions tab:
 	Click "New..."
 	"Start in (optional):" the folder location where pushNewGrades.py is
 	"Program/script:" pushNewGrades.py
+Regardless of the time of day, the task should begin to run at every time increment after 12:00:00 AM.
+For example, if the task is configured to run every 5 minutes and you create this task at 3:41 PM, its Next Run Time should immediately be 3:45 PM.
