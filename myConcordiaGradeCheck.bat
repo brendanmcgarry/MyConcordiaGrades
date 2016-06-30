@@ -27,6 +27,7 @@ if %size% gtr 0 (
 	python emailForNewGrades.py
 )
 
+<<<<<<< HEAD
 REM replace old archived MyConcordiaGradess with most recent grades
 REM >nul 2>&1 suppresses output, which is required despite echo off
 move newcheckedgrades.txt checkedgrades.txt >nul 2>&1

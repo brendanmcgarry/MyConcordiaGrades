@@ -1,2 +1,6 @@
 tests/
 checkedgrades.txt
+hold.txt
+ghostdriver.log
+.DS_STORE
+ConcordiaGrades.db
