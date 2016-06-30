@@ -99,7 +99,7 @@ After saving the file run this in your terminal:
 
 and it should display the cron job that you added previously (NOTE: If you ran crontab with sudo previously you must also run this command with sudo).
 
-Setting up a Windows Task Scheduler on a PC
+Setting up a Scheduled Task on a PC
 ===========================================
 Open the Windows Task Scheduler
 
