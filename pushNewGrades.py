@@ -66,31 +66,43 @@ try:
 	
 	# Wait until the iframe is loaded (it waits a max of 10 seconds at the moment)
 	iFrameSrc = wait.until(EC.presence_of_element_located((By.ID, "ptifrmtgtframe")))
-
-	# Go to the iframe page
-	driver.get(iFrameSrc.get_attribute("src"))
-
-	# Click the summer radio button
-	radioBtn = wait.until(EC.presence_of_element_located((By.ID, "SSR_DUMMY_RECV1$sels$2$$0")))
-	radioBtn.click()
-
-	driver.find_element_by_id("DERIVED_SSS_SCT_SSR_PB_GO").click()
-
+	semesterSelectPage = iFrameSrc.get_attribute("src")
+	
 	try:
-		# Wait until the 'change term' button loads
-		wait.until(EC.presence_of_element_located((By.ID, "DERIVED_SSS_SCT_SSS_TERM_LINK")))
-
-		# Loop keeps going until it can't find anymore grades
 		i = 0
 		while True:
-			grade  = driver.find_element_by_id("win0divSTDNT_ENRL_SSV1_GRADE_POINTS$"+str(i))
-			grade  = grade.find_elements_by_css_selector("*")[0].get_attribute("innerHTML")
-			gClass = driver.find_element_by_id("CLS_LINK$"+str(i)).get_attribute("innerHTML")
+			# Go to the iframe page
+			driver.get(semesterSelectPage)
 
-			# Store the grade
-			if grade != "&nbsp;":
-				grades[gClass] = grade
+			# Click the summer radio button
+			semester = wait.until(EC.presence_of_element_located((By.ID, "TERM_CAR$" + str(i))))
+			semester = semester.get_attribute("innerHTML")
+			
+			radioBtn = wait.until(EC.presence_of_element_located((By.ID, "SSR_DUMMY_RECV1$sels$" + str(i) + "$$0")))
+			radioBtn.click()
 
+			driver.find_element_by_id("DERIVED_SSS_SCT_SSR_PB_GO").click()
+
+			try:
+				# Wait until the 'change term' button loads
+				wait.until(EC.presence_of_element_located((By.ID, "DERIVED_SSS_SCT_SSS_TERM_LINK")))
+
+				# Loop keeps going until it can't find anymore grades
+				j = 0
+				while True:
+					grade  = driver.find_element_by_id("win0divDERIVED_SSS_HST_DESCRSHORT$"+str(j))
+					grade  = grade.find_elements_by_css_selector("*")[0].get_attribute("innerHTML")
+					gClass = driver.find_element_by_id("CLS_LINK$"+str(j)).get_attribute("innerHTML")
+
+					# Store the grade
+					if grade != "&nbsp;":
+						grades[semester + ": " + gClass] = grade
+
+					j += 1
+			except Exception as e:
+				if "TimeException" in str(type(e)):
+					errorLogging(e)
+					exceptions = True
 			i += 1
 	except Exception as e:
 		if "TimeException" in str(type(e)):
@@ -135,7 +147,7 @@ if len(newGrades) > 0:
 	# Send the new grades to the valid SMS email
 	import smtplib
 
-	message = "\n"
+	message = ""
 	for grade in newGrades:
 		message += grade + ": " + newGrades[grade] + "\n"
 	
