@@ -1,14 +1,29 @@
 def errorLogging(error):
 	print "The error: "+str(type(error))+" has occurred"
 
+# Get credentials and settings
+import sqlite3
+conn = sqlite3.connect('ConcordiaGrades.db')
+
+cursor = conn.execute('''SELECT `Netname`, `Password`, `SourceEmail`, `EmailPass`,
+								`ToSendText`, `ToSendEmail`, `ToSendDesktopNotification`,
+								`CellNum`, `Provider`, `DestEmail`
+							FROM `Settings`;
+						''')
+
+settings = cursor.fetchall()[0]
+						
 # Initialize all of these variables to your information
-yourUsername  = "user"
-yourPassword  = "pass"
-yourEmail     = "email"
-yourEmailPass = "emailPass"
-yourNumber    = "num"
-yourProvider  = "provider"	# Select your provider from smsGateways.txt
-							# If your carrier is not there, please add them and their gateway to smsGateways.txt in the proper format
+yourUsername  = settings[0]
+yourPassword  = settings[1]
+yourEmail     = settings[2]
+yourEmailPass = settings[3]
+toSendText    = settings[4]
+toSendEmail   = settings[5]
+desktopNotif  = settings[6]
+yourNumber    = settings[7]
+yourProvider  = settings[8]
+destEmail     = settings[9]
 
 import sys
 from selenium import webdriver
@@ -79,10 +94,7 @@ finally:
 	if exceptions:
 		sys.exit()
 
-# Check if the grade already exists in the database
-import sqlite3
-
-conn = sqlite3.connect('ConcordiaGrades.db')
+# Check if the grades already exists in the database
 
 # Check if the grades table exists, if not then create it
 cursor = conn.execute('''SELECT name 
@@ -140,9 +152,9 @@ if len(newGrades) > 0:
 	smtpserver.close()
 
 	# Add the new grades to the DB
-	for grade in newGrades:
-		conn.execute("DELETE FROM `Grades` WHERE `Class` = \'"+grade+"\'")
-		conn.execute("INSERT INTO `Grades` (`Class`, `Grade`) VALUES (\'"+grade+"\', \'"+newGrades[grade]+"\');")
+	for course in newGrades:
+		conn.execute("DELETE FROM `Grades` WHERE `Class` = \'"+course+"\'")
+		conn.execute("INSERT INTO `Grades` (`Class`, `Grade`) VALUES (\'"+course+"\', \'"+newGrades[course]+"\');")
 	conn.commit()
 
 	# REMOVE IN PRODUCTION
