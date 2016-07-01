@@ -1,5 +1,16 @@
 def errorLogging(error):
 	print "The error: "+str(type(error))+" has occurred"
+	
+def sendEmail(gmail, pw, to, message):
+	smtpserver = smtplib.SMTP("smtp.gmail.com", 587)
+	smtpserver.ehlo()
+	smtpserver.starttls()
+	smtpserver.ehlo
+	smtpserver.login(gmail, yourEmailPass)
+	header = 'To:' + to + '\n' + 'From: ' + gmail + '\n' + 'Subject:New grade(s) \n'
+	msg = header + '\n ' + message + ' \n\n'
+	smtpserver.sendmail(gmail, to, msg)
+	smtpserver.close()
 
 # Get credentials and settings
 import sqlite3
@@ -14,16 +25,16 @@ cursor = conn.execute('''SELECT `Netname`, `Password`, `SourceEmail`, `EmailPass
 settings = cursor.fetchall()[0]
 						
 # Initialize all of these variables to your information
-yourUsername  = settings[0]
-yourPassword  = settings[1]
-yourEmail     = settings[2]
-yourEmailPass = settings[3]
-toSendText    = settings[4]
-toSendEmail   = settings[5]
-desktopNotif  = settings[6]
-yourNumber    = settings[7]
-yourProvider  = settings[8]
-destEmail     = settings[9]
+yourUsername   = settings[0]
+yourPassword   = settings[1]
+yourEmail      = settings[2]
+yourEmailPass  = settings[3]
+toSendText     = settings[4]
+toSendEmail    = settings[5]
+toDesktopNotif = settings[6]
+yourNumber     = settings[7]
+yourProvider   = settings[8]
+destEmail      = settings[9]
 
 import sys
 from selenium import webdriver
@@ -120,18 +131,6 @@ for row in cursor:
 		if row[0] == course and row[1] == newGrades[course]:
 			del newGrades[course]
 
-# Get carrier sms gateway
-smsGateway = ""
-fp = open("smsGateways.txt")	# file with carriers and sms gateways, comma separated
-lines = fp.read().split("\n")
-fp.close()
-
-for line in lines:
-	aCarrier = line.split(",")[0]
-	aGateway = line.split(",")[1]
-	if yourProvider in aCarrier:
-		smsGateway = aGateway
-
 if len(newGrades) > 0:
 	# Send the new grades to the valid SMS email
 	import smtplib
@@ -139,18 +138,37 @@ if len(newGrades) > 0:
 	message = "\n"
 	for grade in newGrades:
 		message += grade + ": " + newGrades[grade] + "\n"
+	
+	# If user wants a text notification
+	if toSendText:
+		# Get carrier sms gateway
+		smsGateway = ""
+		fp = open("smsGateways.txt")	# file with carriers and sms gateways, comma separated
+		lines = fp.read().split("\n")
+		fp.close()
 
-	to = yourNumber+smsGateway
-	smtpserver = smtplib.SMTP("smtp.gmail.com", 587)
-	smtpserver.ehlo()
-	smtpserver.starttls()
-	smtpserver.ehlo
-	smtpserver.login(yourEmail, yourEmailPass)
-	header = 'To:' + to + '\n' + 'From: ' + yourEmail + '\n' + 'Subject:New grade(s) \n'
-	msg = header + '\n ' + message + ' \n\n'
-	smtpserver.sendmail(yourEmail, to, msg)
-	smtpserver.close()
+		for line in lines:
+			aCarrier = line.split(",")[0]
+			aGateway = line.split(",")[1]
+			if yourProvider in aCarrier:
+				smsGateway = aGateway
+		
+		to = yourNumber+smsGateway
+		
+		sendEmail(yourEmail, yourEmailPass, to, message)
 
+	if toSendEmail:
+		to = destEmail
+		
+		sendEmail(yourEmail, yourEmailPass, to, message)
+		
+	if toDesktopNotif:
+		import os
+		file = open('notif.txt', 'w+')
+		file.write(message)
+		file.close()
+		os.startfile("notif.txt")
+	
 	# Add the new grades to the DB
 	for course in newGrades:
 		conn.execute("DELETE FROM `Grades` WHERE `Class` = \'"+course+"\'")
