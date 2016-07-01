@@ -18,18 +18,16 @@ Also, using the email-to-SMS service that many cell phone carriers provide can r
 Setting up the files
 ====================
 
-The first thing you want to do is download "pushNewGrades.py", after doing so you must change the following variables inside 
-the script:
+The first thing you want to do is download "init.py" and "pushNewGrades.py".
 
-* yourUsername => MyConcordia username
-* yourPassword => MyConcordia password
-* yourEmail    => Your email; must have "Allow less secured apps" enabled. I recommend creating a dummy email.
+Run "init.py" and input your user information (which will just be stored on your local machine).
+
+For the "Gmail username/password to send texts/emails from" we recommend that you create a dummy email.
+For that account, you must have "Allow less secured apps" enabled.
 
 You can do so here: [link](https://www.google.com/settings/security/lesssecureapps)
 
-* yourEmailPass => Your email's password
-* yourNumber    => Your phone number
-* yourProvider  => The suffix needed to send an SMS via email for your specific provider. For rogers it's: "sms.rogers.com"
+For your SMS carrier, the carrier name and their email-to-SMS gateway must be in "smsGateways.txt". Otherwise, add it to the file in the same format as the other entries.
 
 Dependencies
 ============
