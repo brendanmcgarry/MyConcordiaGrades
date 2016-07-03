@@ -67,6 +67,16 @@ __*Step 1.5*__
 You may have to run, "sudo env EDITOR=vi crontab -e" instead depending on your permissions. I personally ran into an error 
 where it couldn't detect phantomJS in the PATH even though it was clearly there. You can use the method below to figure out if you are receiving this error.
 
+__*Step 1.75*__
+
+Add the following at the top of crontab, I personally needed it because the crontab didn't have the right PATH directory. It might work without it on your computer if you want to give it a try.
+
+```
+  PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+```
+
+You can add other directories if you need them.
+
 __*Step 2*__
 
 Finally add the following line inside the editor:
